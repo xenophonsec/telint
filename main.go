@@ -80,7 +80,7 @@ func main() {
 	ACdata := getACdata(ac)
 	if len(ACdata) == 0 {
 		fmt.Println("Area code not found in NANP database.")
-		fmt.Println("This phone number may not exist, or be a foriegn number unknown by this tool.")
+		fmt.Println("This phone number may not exist, or be a foreign number unknown by this tool.")
 	} else {
 		fmt.Println("NANP area code match found")
 		fmt.Println("")
