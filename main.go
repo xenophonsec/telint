@@ -41,28 +41,14 @@ func main() {
 
 	// handle help flag
 	if pn == "--help" {
-		fmt.Println("Description: Analyze phone numbers using public records/reports/regulations")
-		fmt.Println("Author: Xenophonsec")
-		fmt.Println("License: MIT")
-		fmt.Println("")
-		fmt.Println("USAGE:")
-		fmt.Println("")
-		fmt.Println("telint PHONENUMBER")
-		fmt.Println("")
-		fmt.Println("Phone numbers must be numbers only: 1234567890")
-		fmt.Println("Country codes are accepted. Simply append it to the beginning: 2223334444 -> 12223334444")
+		printHelp()
 		return
 	}
+
 	// validate phone number
-	// must be less than 12 numbers long
-	if len(pn) > 11 {
-		fmt.Println("Phone number is too long")
-		return
-	}
-	// must be only numbers
-	match, _ := regexp.MatchString("^\\d+$", pn)
-	if !match {
-		fmt.Println("Invalid phone number. Please only enter numbers.")
+	vpnmsg := ValidPhoneNumber(pn)
+	if vpnmsg != "" {
+		fmt.Println(vpnmsg)
 		return
 	}
 
@@ -265,4 +251,34 @@ func getAC5XXdata(pn string) []string {
 		}
 	}
 	return []string{}
+}
+
+func ValidPhoneNumber(pn string) string {
+	// must be longer than 2 digits long
+	if len(pn) < 3 {
+		return "Phone number must be more that 2 numbers long"
+	}
+	// must be less than 12 numbers long
+	if len(pn) > 11 {
+		return "Phone number is too long. It must be 11 or less numbers long"
+	}
+	// must be only numbers
+	match, _ := regexp.MatchString("^\\d+$", pn)
+	if !match {
+		return "Invalid phone number. Please only enter numbers."
+	}
+	return ""
+}
+
+func printHelp() {
+	fmt.Println("Description: Analyze phone numbers using public records/reports/regulations")
+	fmt.Println("Author: Xenophonsec")
+	fmt.Println("License: MIT")
+	fmt.Println("")
+	fmt.Println("USAGE:")
+	fmt.Println("")
+	fmt.Println("telint PHONENUMBER")
+	fmt.Println("")
+	fmt.Println("Phone numbers must be numbers only: 1234567890")
+	fmt.Println("Country codes are accepted. Simply append it to the beginning: 2223334444 -> 12223334444")
 }
