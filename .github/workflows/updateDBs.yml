@@ -1,0 +1,35 @@
+
+name: Go
+
+on:
+  schedule:
+    - cron: "0 0 28 * *"
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+        
+    - name: Update NPA database
+      run: wget -O db/npa_report.csv https://www.nationalnanpa.com/nanp1/npa_report.csv
+    
+    - name: Update 5XX database
+      run: wget -O db/5XX_report.txt https://nationalnanpa.com/nanp1/All5XXNXXCodesReport.txt
+      
+    - name: Download special cases database
+      run: wget -O db/special_handling.xlsx https://nationalnanpa.com/reports/Codes_requiring_special_handling.xlsx
+      
+    - name: Convert special cases xlsx file to csv
+      uses: jmservera/libreoffice-action@v0.3.0-alpha
+      with:
+        command: libreoffice --headless --convert-to csv db/special_handling.xlsx --outdir db
+      
+    - name: Clean up
+      run: rm db/special_handling.xlsx
+          
+    - name: Git Auto Commit
+      uses: stefanzweifel/git-auto-commit-action@v4.16.0
+      with:
+        commit_message: Updated databases
+        branch: main
