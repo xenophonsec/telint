@@ -1,12 +1,12 @@
 
-name: Go
+name: Updatedbs
 
 on:
   schedule:
     - cron: "0 0 28 * *"
 jobs:
 
-  build:
+  updatedbs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
