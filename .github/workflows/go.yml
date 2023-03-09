@@ -1,0 +1,43 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Go
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.19
+        
+    - name: Update NPA database
+      run: wget -O db/npa_report.csv https://www.nationalnanpa.com/nanp1/npa_report.csv
+    
+    - name: Update 5XX database
+      run: wget -O db/5XX_report.txt https://nationalnanpa.com/nanp1/All5XXNXXCodesReport.txt
+      
+    - name: Download special cases database
+      run: wget -O db/special_handling.xlsx https://nationalnanpa.com/reports/Codes_requiring_special_handling.xlsx
+      
+    - name: Convert special cases xlsx file to csv
+      run: libreoffice --headless --convert-to csv db/special_handling.xlsx --outdir db
+      
+    - name: Clean up
+      run: rm db/special_handling.xlsx
+
+    - name: Build
+      run: go build -v
+
+    - name: Test
+      run: go test -v
