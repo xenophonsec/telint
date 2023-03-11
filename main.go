@@ -45,6 +45,9 @@ func main() {
 		return
 	}
 
+	// remove hyphens from phone number if they are there
+	pn = strings.ReplaceAll(pn, "-", "")
+
 	// validate phone number
 	vpnmsg := ValidPhoneNumber(pn)
 	if vpnmsg != "" {
