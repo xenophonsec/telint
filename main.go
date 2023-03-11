@@ -157,6 +157,13 @@ func main() {
 
 	// Toll Free Area Codes
 	handleTollFreeACs(pn)
+
+	fmt.Println("Maybe Google knows something about this number?")
+	fmt.Println("https://www.google.com/search?q=" + pn)
+	fmt.Println("https://www.google.com/search?q=tel:" + pn)
+	fmt.Println("https://www.google.com/search?q=" + pn[0:3] + "-" + pn[3:6] + "-" + pn[6:10])
+	fmt.Println("https://www.google.com/search?q=(" + pn[0:3] + ")%20" + pn[3:6] + "-" + pn[6:10])
+	fmt.Println("https://www.google.com/search?q=phone%20" + pn[0:3] + "-" + pn[3:6] + "-" + pn[6:10])
 }
 
 // Handle N11 Area Codes
