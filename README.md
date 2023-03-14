@@ -55,7 +55,7 @@ Go v19 is the only prerequisite.
 ### Install using go
 
 ```
-go install github.com/xenophonsec/telint
+go install github.com/xenophonsec/telint@latest
 ```
 
 ### Build from source
@@ -64,8 +64,8 @@ go install github.com/xenophonsec/telint
 git clone https://github.com/xenophonsec/telint.git
 cd telint
 go build
-chmod +x telint
-./telint phonenumber
+# or install globally
+go install
 ```
 
 ## National Numbers
